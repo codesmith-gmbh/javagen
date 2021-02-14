@@ -5,6 +5,10 @@
 (defmacro c-name [arg]
   `(name ~arg))
 
+(defmacro str-and [& args]
+  `(let [v# (and ~@args)]
+     (if v# v# "")))
+
 (def push-scope conj)
 (def top-scope last)
 
@@ -12,10 +16,10 @@
                  (::type construct)))
 
 (defn static-str [static?]
-  (if static? "static" ""))
+  (str-and static? "static"))
 
 (defn final-str [final?]
-  (if final? "final" ""))
+  (str-and final? "final"))
 
 (defn println-oneline-stmt [& parts]
   (apply println (concat parts [";"])))
@@ -46,8 +50,8 @@
       (static-str static?)
       (final-str final?)
       "class" (c-name name)
-      (if extends (str "extends " extends))
-      (if implements (str "implements " (str/join ", " implements)))
+      (str-and extends (str "extends " extends))
+      (str-and implements (str "implements " (str/join ", " implements)))
       "{")
     (println)
     (doseq [part declarations]
@@ -79,13 +83,13 @@
                              :name  name})]
     (print (c-name access-modifier) (static-str static?) (c-name return-type) name "(")
     (emit ctx parameters)
-    (println ")" (if throws (str "throws " throws)) "{")
+    (println ")" (str-and throws (str "throws " throws)) "{")
     (emit ctx body)
     (println "}")))
 
 (defmethod emit :parameters [_ {:keys [parameters]}]
   (print (str/join ", " (map (fn [{:keys [type name]}]
-                               (str type " " name))
+                               (str (c-name type) " " name))
                              parameters))))
 
 (defmethod emit :field [_ {:keys [type name static? final? access-modifier] :or {access-modifier :public}}]

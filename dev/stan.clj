@@ -27,7 +27,7 @@
                                                   :throws     "Exception"
                                                   :parameters {::jg/type   :parameters
                                                                :parameters [{:name "first"
-                                                                             :type "String"}
+                                                                             :type :String}
                                                                             {:name "second"
                                                                              :type "int"}]}}]}]})
 
