@@ -28,6 +28,10 @@
   {::type      :parameters
    :parameters params})
 
+(defn fragment [text]
+  {::type    :fragment
+   :fragment text})
+
 (defmethod emit nil [_ _]
   )
 
