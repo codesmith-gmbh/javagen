@@ -45,7 +45,7 @@
   (println)
   (emit ctx imports)
   (println)
-  (doseq [declaration declarations]
+  (doseq [declaration (flatten declarations)]
     (emit ctx declaration)
     (println)))
 
@@ -64,7 +64,7 @@
       (str-and implements (str "implements " (str/join ", " implements)))
       "{")
     (println)
-    (doseq [part declarations]
+    (doseq [part (flatten declarations)]
       (emit ctx part)
       (println))
     (println "}")))
