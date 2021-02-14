@@ -22,6 +22,9 @@
                                                                :println? false}
                                                   :body       {::jg/type :fragment
                                                                :fragment "int b = a + 1;\n"}}
+                                                 {::jg/type     :comment
+                                                  :comment      "hello\nStan"
+                                                  :comment-type :line}
                                                  {::jg/type   :method
                                                   :name       "test"
                                                   :throws     "Exception"
