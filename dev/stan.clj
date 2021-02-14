@@ -16,7 +16,9 @@
                                                  {::jg/type :constructor}
                                                  {::jg/type   :constructor
                                                   :parameters {::jg/type :fragment
-                                                               :fragment "int a"}}
+                                                               :fragment "int a"}
+                                                  :body {::jg/type :fragment
+                                                         :fragment "int b = a + 1;\n"}}
                                                  {::jg/type   :method
                                                   :name       "test"
                                                   :parameters {::jg/type   :parameters

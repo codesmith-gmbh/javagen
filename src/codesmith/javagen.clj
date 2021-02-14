@@ -21,7 +21,7 @@
   )
 
 (defmethod emit :fragment [ctx {:keys [fragment]}]
-  (println fragment))
+  (print fragment))
 
 (defmethod emit :file [ctx {:keys [package-name imports declarations]}]
   (println-oneline-stmt "package" package-name)
@@ -53,7 +53,7 @@
     (print (c-name access-modifier) class-name "(")
     (emit ctx parameters)
     (println ") {")
-    (when body (println body))
+    (emit ctx body)
     (println "}")))
 
 (defmethod emit :method [ctx {:keys [name
@@ -69,7 +69,7 @@
     (print (c-name access-modifier) (static-str static?) (c-name return-type) name "(")
     (emit ctx parameters)
     (println ") {")
-    (when body (println body))
+    (emit ctx body)
     (println "}")))
 
 (defmethod emit :parameters [_ {:keys [parameters]}]
