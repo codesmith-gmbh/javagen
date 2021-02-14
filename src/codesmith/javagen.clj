@@ -24,6 +24,10 @@
 (defn println-oneline-stmt [& parts]
   (apply println (concat parts [";"])))
 
+(defn parameters [& values]
+  {::type   :parameters
+   :parameters values})
+
 (defmethod emit nil [_ _]
   )
 
