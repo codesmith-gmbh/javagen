@@ -39,9 +39,16 @@
   (doseq [import imports]
     (println-oneline-stmt "import" import)))
 
-(defmethod emit :class [ctx {:keys [name access-modifier static? final? declarations] :or {access-modifier :public}}]
+(defmethod emit :class [ctx {:keys [name access-modifier static? final? declarations extends implements] :or {access-modifier :public}}]
   (let [ctx (push-scope ctx {:scope :class :name name})]
-    (println (c-name access-modifier) (static-str static?) (final-str final?) "class" (c-name name) "{")
+    (println
+      (c-name access-modifier)
+      (static-str static?)
+      (final-str final?)
+      "class" (c-name name)
+      (if extends (str "extends " extends))
+      (if implements (str "implements " (str/join ", " implements)))
+      "{")
     (println)
     (doseq [part declarations]
       (emit ctx part)

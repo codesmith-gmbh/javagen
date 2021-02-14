@@ -9,6 +9,8 @@
                               :imports  ["java.util.List"]}
                :declarations [{::jg/type        :class
                                :access-modifier :public
+                               :extends         "Object"
+                               :implements      ["Protocol1", "Protocol2"]
                                :name            "Test"
                                :declarations    [{::jg/type :field
                                                   :name     "a"
