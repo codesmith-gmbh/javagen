@@ -18,10 +18,11 @@
                                                   :parameters {::jg/type :fragment
                                                                :fragment "int a"
                                                                :println? false}
-                                                  :body {::jg/type :fragment
-                                                         :fragment "int b = a + 1;\n"}}
+                                                  :body       {::jg/type :fragment
+                                                               :fragment "int b = a + 1;\n"}}
                                                  {::jg/type   :method
                                                   :name       "test"
+                                                  :throws     "Exception"
                                                   :parameters {::jg/type   :parameters
                                                                :parameters [{:name "first"
                                                                              :type "String"}
