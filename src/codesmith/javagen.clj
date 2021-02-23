@@ -21,12 +21,16 @@
 (defn final-str [final?]
   (str-and final? "final"))
 
-(defn println-oneline-stmt [& parts]
+(defn println-one-line-stmt [& parts]
   (apply println (concat parts [";"])))
 
-(defn parameters [& values]
-  {::type   :parameters
-   :parameters values})
+(defn parameters [& params]
+  {::type      :parameters
+   :parameters params})
+
+(defn fragment [text]
+  {::type    :fragment
+   :fragment text})
 
 (defmethod emit nil [_ _]
   )
@@ -34,18 +38,24 @@
 (defmethod emit :fragment [ctx {:keys [fragment println?] :or {println? true}}]
   ((if println? println print) fragment))
 
+(defmethod emit :comment [ctx {:keys [comment comment-type] :or {comment-type :block}}]
+  (case comment-type
+    :block (do (println "/*") (println comment) (println "*/"))
+    :line (doseq [line (str/split comment #"\n")]
+            (println "//" line))))
+
 (defmethod emit :file [ctx {:keys [package-name imports declarations]}]
-  (println-oneline-stmt "package" package-name)
+  (println-one-line-stmt "package" package-name)
   (println)
   (emit ctx imports)
   (println)
-  (doseq [declaration declarations]
+  (doseq [declaration (flatten declarations)]
     (emit ctx declaration)
     (println)))
 
 (defmethod emit :imports [ctx {:keys [imports]}]
   (doseq [import imports]
-    (println-oneline-stmt "import" import)))
+    (println-one-line-stmt "import" import)))
 
 (defmethod emit :class [ctx {:keys [name access-modifier static? final? declarations extends implements] :or {access-modifier :public}}]
   (let [ctx (push-scope ctx {:scope :class :name name})]
@@ -58,7 +68,7 @@
       (str-and implements (str "implements " (str/join ", " implements)))
       "{")
     (println)
-    (doseq [part declarations]
+    (doseq [part (flatten declarations)]
       (emit ctx part)
       (println))
     (println "}")))
@@ -97,7 +107,7 @@
                              parameters))))
 
 (defmethod emit :field [_ {:keys [type name static? final? access-modifier] :or {access-modifier :public}}]
-  (println-oneline-stmt (c-name access-modifier) (static-str static?) (final-str final?) (c-name type) (c-name name)))
+  (println-one-line-stmt (c-name access-modifier) (static-str static?) (final-str final?) (c-name type) (c-name name)))
 
 (defn emit-to-out [java-structure]
   (emit [] java-structure))

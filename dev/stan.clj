@@ -15,13 +15,16 @@
                                :declarations    [{::jg/type :field
                                                   :name     "a"
                                                   :type     :String}
-                                                 {::jg/type :constructor}
-                                                 {::jg/type   :constructor
-                                                  :parameters {::jg/type :fragment
-                                                               :fragment "int a"
-                                                               :println? false}
-                                                  :body       {::jg/type :fragment
-                                                               :fragment "int b = a + 1;\n"}}
+                                                 [{::jg/type :constructor}
+                                                  {::jg/type   :constructor
+                                                   :parameters {::jg/type :fragment
+                                                                :fragment "int a"
+                                                                :println? false}
+                                                   :body       {::jg/type :fragment
+                                                                :fragment "int b = a + 1;\n"}}]
+                                                 {::jg/type     :comment
+                                                  :comment      "hello\nStan"
+                                                  :comment-type :line}
                                                  {::jg/type   :method
                                                   :name       "test"
                                                   :throws     "Exception"
