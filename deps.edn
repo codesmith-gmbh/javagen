@@ -11,5 +11,9 @@
                       :main-opts  ["-m" "kaocha.runner"]}
            :outdated {:extra-deps {antq/antq {:mvn/version "0.11.1"}}
                       :main-opts  ["-m" "antq.core"]}
-           }
+           :jar      {:extra-deps {seancorfield/depstar {:mvn/version "2.0.187"}}
+                      :main-opts  ["-m" "hf.depstar.jar" "target/codesmith-javagen.jar"]}
+           :deploy   {:extra-deps {slipset/deps-deploy {:mvn/version "0.1.5"}}
+                      :main-opts  ["-m" "deps-deploy.deps-deploy" "deploy"
+                                   "target/codesmith-javagen.jar"]}}
  }
